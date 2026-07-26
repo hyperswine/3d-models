@@ -1,7 +1,4 @@
 # type: ignore
-
-# /Applications/FreeCAD.app/Contents/MacOS/FreeCAD
-
 import FreeCAD as App
 import Part
 import ObjectsFem
@@ -10,10 +7,10 @@ from femmesh.gmshtools import GmshTools
 
 doc = App.newDocument("TubeFEA")
 
-# 1. Geometry — Part module uses boolean cut (outer cylinder - inner cylinder)
+# 1. Geometry — Outer cylinder minus inner cylinder
 outer_r = 10.0  # mm
 inner_r = 5.0   # mm
-height = 1000.0  # mm
+height = 1000.0 # mm
 
 outer_cyl = Part.makeCylinder(outer_r, height)
 inner_cyl = Part.makeCylinder(inner_r, height)
@@ -36,12 +33,16 @@ mat["Density"] = "2700 kg/m^3"
 material.Material = mat
 analysis.addObject(material)
 
-# 4. Mesh Generation (Gmsh via GmshTools API)
+# 4. Mesh Generation (Gmsh)
 mesh_obj = ObjectsFem.makeMeshGmsh(doc, "FEMMeshGmsh")
 mesh_obj.Shape = tube_obj
-mesh_obj.CharacteristicLengthMax = 2.0  # mm
-mesh_obj.CharacteristicLengthMin = 0.5  # mm
+mesh_obj.CharacteristicLengthMax = 3.0  # mm
+mesh_obj.CharacteristicLengthMin = 1.0  # mm
 mesh_obj.ElementOrder = "2nd"
+
+# FIX 1: Prevents inverted mid-nodes on cylindrical surfaces
+mesh_obj.SecondOrderLinear = True
+
 doc.recompute()
 analysis.addObject(mesh_obj)
 
@@ -50,7 +51,7 @@ gmsh_mesh = GmshTools(mesh_obj)
 gmsh_mesh.create_mesh()
 doc.recompute()
 
-# 5. Constraints — Programmatically locate top and bottom annular end faces
+# 5. Constraints — Locate top and bottom annular end faces dynamically
 top_face_name = ""
 bottom_face_name = ""
 
@@ -68,13 +69,13 @@ analysis.addObject(fixed)
 
 # 6. Gravity Load (Self weight)
 force = ObjectsFem.makeConstraintSelfWeight(doc, "ConstraintSelfWeight")
-# mm/s^2 (Standard gravity acceleration in mm system)
-force.GravityAcceleration = 9810.0
+force.GravityAcceleration = 9810.0  # mm/s^2
 force.GravityDirection = App.Vector(0, 0, -1)
 analysis.addObject(force)
 
 # 7. Solver
-solver = ObjectsFem.makeSolverCalculixCcxTools(doc, "CalculiXccxTools")
+# FIX 2: Correct function capitalization (CalculiX with capital 'I')
+solver = ObjectsFem.makeSolverCalculiXCcxTools(doc, "CalculiXccxTools")
 analysis.addObject(solver)
 doc.recompute()
 
