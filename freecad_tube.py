@@ -8,8 +8,8 @@ from femmesh.gmshtools import GmshTools
 doc = App.newDocument("TubeFEA")
 
 # 1. Geometry — Outer cylinder minus inner cylinder
-outer_r = 10.0  # mm
-inner_r = 5.0   # mm
+outer_r = 25  # mm
+inner_r = 22   # mm
 height = 1000.0 # mm
 
 outer_cyl = Part.makeCylinder(outer_r, height)
@@ -36,7 +36,7 @@ analysis.addObject(material)
 # 4. Mesh Generation (Gmsh)
 mesh_obj = ObjectsFem.makeMeshGmsh(doc, "FEMMeshGmsh")
 mesh_obj.Shape = tube_obj
-mesh_obj.CharacteristicLengthMax = 3.0  # mm
+mesh_obj.CharacteristicLengthMax = 0.5  # mm
 mesh_obj.CharacteristicLengthMin = 1.0  # mm
 mesh_obj.ElementOrder = "2nd"
 
