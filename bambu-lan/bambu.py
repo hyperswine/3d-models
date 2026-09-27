@@ -54,7 +54,8 @@ def summary(p):
     for label, key in fields:
         if key in p:
             print(f"  {label:14} {p[key]}")
-    for tray in p.get("ams", {}).get("ams", [{}])[0].get("tray", []) if p.get("ams") else []:
+    units = (p.get("ams") or {}).get("ams") or []  # printers without an AMS report an empty list
+    for tray in (units[0].get("tray", []) if units else []):
         print(f"  AMS slot {tray.get('id')}: {tray.get('tray_type','—')} #{tray.get('tray_color','')}")
     ext = p.get("vt_tray")
     if ext:
