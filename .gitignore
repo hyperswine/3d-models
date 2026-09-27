@@ -3,3 +3,6 @@
 __pycache__
 *.bak
 *.FCBak
+bambu-lan/status.json
+bambu-lan/frames/
+.env
