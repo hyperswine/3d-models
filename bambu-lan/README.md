@@ -19,7 +19,7 @@ Never commit the access code: anyone on the network who has it gets full control
 ## What the printer exposes
 
 | Port | Protocol | Used for | Auth |
-|------|----------|----------|------|
+| ------ | ---------- | ---------- | ------ |
 | UDP 2021 | SSDP NOTIFY broadcasts | Discovery (IP, serial, model, mode, firmware) | none |
 | 8883 | MQTT over TLS (self-signed cert) | Status reports + commands | user `bblp`, password = access code |
 | 990 | Implicit FTPS | SD card file access | user `bblp`, password = access code |
@@ -32,7 +32,7 @@ Reports are incremental: send a `pushall` first to get the full state, then merg
 ## Scripts
 
 | Script | What it does |
-|--------|--------------|
+| -------- | -------------- |
 | `discover.py` | Lists printers on the LAN from their SSDP broadcasts |
 | `bambu.py status` | Full status: state, progress, layers, temps, AMS slots; raw JSON to `status.json` |
 | `bambu.py watch` | Streams live changes (state, %, layer, temps, time left) |
