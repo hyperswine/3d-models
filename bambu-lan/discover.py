@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+
 """Find Bambu printers on the LAN by listening for their SSDP NOTIFY broadcasts (UDP 2021).
   python3 discover.py [seconds]
 """
+
 import socket, sys, time
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)

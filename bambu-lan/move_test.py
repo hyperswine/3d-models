@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
+
 """Home Y, then slide the bed +50mm / -50mm, capturing camera frames at each step."""
+
 import json, os, ssl, subprocess, time
 import paho.mqtt.client as mqtt
 from bambu import HOST, SERIAL, CODE, REPORT, REQUEST

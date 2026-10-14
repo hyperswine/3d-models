@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
+
 """Upload/list files on the A1's SD card via implicit FTPS (port 990).
   python3 ftp.py list
   python3 ftp.py upload local_file [remote_name]
 """
+
 import ftplib, os, ssl, sys
 
 HOST = os.environ["BAMBU_HOST"]

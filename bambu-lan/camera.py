@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+
 """Grab JPEG frames from the A1/P1 camera stream (TLS, port 6000).
   python3 camera.py [n_frames] [out_dir]
 """
+
 import os, socket, ssl, struct, sys
 
 HOST = os.environ["BAMBU_HOST"]

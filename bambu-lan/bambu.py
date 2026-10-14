@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """Minimal Bambu Lab A1 LAN-mode MQTT client.
 
 Usage:
@@ -10,6 +11,7 @@ Usage:
   python3 bambu.py pause|resume|stop
   python3 bambu.py gcode "M104 S0"       # send a raw G-code line (developer mode)
 """
+
 import json, os, ssl, sys, time
 import paho.mqtt.client as mqtt
 
