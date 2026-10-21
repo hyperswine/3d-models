@@ -4,8 +4,8 @@ from math import radians, cos, sin
 
 # Create the torus
 bpy.ops.mesh.primitive_torus_add(
-    align='WORLD', 
-    major_segments=16, 
+    align='WORLD',
+    major_segments=16,
     minor_radius=4/10,  # (outer diameter - inner diameter) / 2
     major_radius=11/10,  # (outer diameter + inner diameter) / 2
     location=(0, 0, 0)
